@@ -1,7 +1,7 @@
 import React from "react";
 import '../App.css'
-import Book from './Book/index'
-import BookFromScratch from "./Book/index1";
+import Upload from './Upload/index'
+import BookFromScratch from "./Upload/index1";
 
 export default class HomeComponent extends React.Component {
 
@@ -26,7 +26,7 @@ export default class HomeComponent extends React.Component {
                 <div style={funStyle}>
                     <div>
                         <h1 style={descText}>CRUD operations on an existing book/xml file </h1>
-                        <Book />
+                        <Upload />
                     </div>
                     <hr style={lineStyle} />
                     <div>

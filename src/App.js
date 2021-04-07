@@ -1,12 +1,17 @@
-import logo from './logo.svg';
+
 import './App.css';
 import HomeScreen from './Screens/HomeScreen'
+import Book from './Components/Book'
+import { HashRouter as Router, Route } from 'react-router-dom'
 
 function App() {
   return (
-    <div className="App">
-      <HomeScreen/>
-    </div>
+    <Router>
+      <div className="App">
+        <Route exact path="/" component={HomeScreen} /> 
+        <Route path="/book" component={Book} />
+      </div>
+    </Router>
   );
 }
 

@@ -1,6 +1,7 @@
 import React from "react";
+import {withRouter} from 'react-router-dom';
 
-class Book extends React.Component{
+class Upload extends React.Component{
     componentDidMount(){
         
     }
@@ -27,7 +28,10 @@ class Book extends React.Component{
             })
             var parser = new DOMParser();
             var xmlDoc = parser.parseFromString(this.state.text,"text/xml");
-            console.log(xmlDoc.getElementsByTagName("title")[0].childNodes[0].nodeValue);
+            this.props.history.push({
+                pathname:"/book",
+                state:{xml:xmlDoc}
+            });
           };
         fr.readAsText(this.state.selectedFile);
     }
@@ -42,7 +46,7 @@ class Book extends React.Component{
     }
 }
 
-export default Book;
+export default withRouter(Upload);
 
 // x-special/nautilus-clipboard
 // copy

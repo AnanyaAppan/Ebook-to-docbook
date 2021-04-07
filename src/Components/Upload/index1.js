@@ -44,8 +44,5 @@ class BookFromScratch extends React.Component {
 
 export default BookFromScratch;
 
-// x-special/nautilus-clipboard
-// copy
-// file:///home/ananya/Documents/DM/project/ranstuff/docbook/ex2.xml
 
 
