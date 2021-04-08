@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Input } from '@material-ui/core';
+import {Delete, ChevronRight} from '@material-ui/icons';
 import { OptionFieldProps } from './types';
 import { StyledOptionField, Spacer, StyledIcon } from './styled-components';
 
@@ -32,11 +33,13 @@ export function OptionField({
         value={label}
       />
       <Spacer />
-      <StyledIcon onClick={remove}>delete</StyledIcon>
+      {/* <StyledIcon onClick={remove}>delete</StyledIcon> */}
+      <Delete onClick={remove}/>
       {isDropdown && (
-        <StyledIcon onClick={label.length ? onDropdownClick : () => null}>
-          chevron_right
-        </StyledIcon>
+        // <StyledIcon onClick={label.length ? onDropdownClick : () => null}>
+        //   chevron_right
+        // </StyledIcon>
+        <ChevronRight onClick={label.length ? onDropdownClick : () => null}/>
       )}
     </StyledOptionField>
   );

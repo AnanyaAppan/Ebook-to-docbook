@@ -126,7 +126,7 @@ export function Dropdown({
           <OptionHeader>Options</OptionHeader>
           {optionFields}
           <AddOption onClick={onAddDropdown}>
-            <Icon style={{ marginRight: '5px', fontSize: '12px' }}>add</Icon>
+            <Icon style={{ marginRight: '5px', fontSize: '12px' }}>+</Icon>
             <div style={{ fontSize: '14px' }}>Add Option</div>
           </AddOption>
         </div>
