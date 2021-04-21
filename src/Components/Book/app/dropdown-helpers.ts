@@ -72,7 +72,7 @@ export const updateDropdownOption = (
       ...options.slice(indexToUpdate + 1)
     ];
   }
-
+  /* updateXml to be called somewhere here! */
   const index = path[0];
   const optionToUpdate = options[index];
   if (updateXml != null) updateXml(path, payload);
