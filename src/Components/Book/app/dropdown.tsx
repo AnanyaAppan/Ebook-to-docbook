@@ -1,15 +1,15 @@
-import * as React from 'react';
-import { SideBarStyles, StyledError } from './styled-components';
-import { Button, Icon } from '@material-ui/core';
-import { DropdownOption, DropdownProps } from './types';
-import { OptionField } from './option-field';
-import { Column } from '../ui';
-import { getDropdownErrorInstructions } from './edit-template-selectors';
+import * as React from "react";
+import { SideBarStyles, StyledError } from "./styled-components";
+import { Button, Icon } from "@material-ui/core";
+import { DropdownOption, DropdownProps } from "./types";
+import { OptionField } from "./option-field";
+import { Column } from "../ui";
+import { getDropdownErrorInstructions } from "./edit-template-selectors";
 import {
   updateDropdownOption,
   addDropdownOption,
   removeDropdownOption
-} from './dropdown-helpers';
+} from "./dropdown-helpers";
 import {
   OptionRow,
   SettingsTitle,
@@ -17,7 +17,7 @@ import {
   AddOption,
   Spacer,
   FixedHeight
-} from './styled-components';
+} from "./styled-components";
 
 const traverseToCurrentPage = (
   options: DropdownOption[] = [],
@@ -50,7 +50,7 @@ const getTitle = (
 };
 
 function convertLabelToValue(str: string) {
-  return str.toLowerCase().replace(/ /g, '_');
+  return str.toLowerCase().replace(/ /g, "_");
 }
 
 export function Dropdown({
@@ -59,10 +59,13 @@ export function Dropdown({
   classification,
   onDropdownClick,
   onChange,
-  insertXml
+  insertXml,
+  updateXml
 }: DropdownProps) {
   const topLevelOptions = classification.options;
-  const displayOptions = topLevelOptions.length? traverseToCurrentPage(topLevelOptions, dropdownPath) : [];
+  const displayOptions = topLevelOptions.length
+    ? traverseToCurrentPage(topLevelOptions, dropdownPath)
+    : [];
 
   const updateDropdown = (dropdownOptions: DropdownOption[]): void => {
     return onChange({
@@ -73,11 +76,17 @@ export function Dropdown({
 
   const onDropdownChange = (index: number) => (option: DropdownOption) => {
     updateDropdown(
-      updateDropdownOption(topLevelOptions, dropdownPath, index, {
-        label: option.label,
-        value: convertLabelToValue(option.value),
-        options: option.options || []
-      })
+      updateDropdownOption(
+        topLevelOptions,
+        dropdownPath,
+        index,
+        {
+          label: option.label,
+          value: convertLabelToValue(option.value),
+          options: option.options || []
+        },
+        updateXml
+      )
     );
   };
 
@@ -116,19 +125,21 @@ export function Dropdown({
 
   return (
     <SideBarStyles>
-      <SettingsTitle>{topLevelOptions.length? getTitle(topLevelOptions, dropdownPath) : ""}</SettingsTitle>
+      <SettingsTitle>
+        {topLevelOptions.length ? getTitle(topLevelOptions, dropdownPath) : ""}
+      </SettingsTitle>
       <Column>
         <div
           style={{
-            margin: '15px',
-            overflowY: 'auto'
+            margin: "15px",
+            overflowY: "auto"
           }}
         >
           <OptionHeader>Options</OptionHeader>
           {optionFields}
           <AddOption onClick={onAddDropdown}>
-            <Icon style={{ marginRight: '5px', fontSize: '12px' }}>+</Icon>
-            <div style={{ fontSize: '14px' }}>Add Option</div>
+            <Icon style={{ marginRight: "5px", fontSize: "12px" }}>+</Icon>
+            <div style={{ fontSize: "14px" }}>Add Option</div>
           </AddOption>
         </div>
       </Column>
@@ -138,8 +149,8 @@ export function Dropdown({
           {errorMessage}
         </StyledError>
         <Button
-          style={{ width: '100%', height: '70px', fontSize: '16px' }}
-          variant={'contained'}
+          style={{ width: "100%", height: "70px", fontSize: "16px" }}
+          variant={"contained"}
           color="primary"
           onClick={onClose}
           disabled={Boolean(errorMessage)}

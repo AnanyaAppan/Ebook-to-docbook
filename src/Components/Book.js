@@ -34,6 +34,12 @@ class Book extends React.Component{
         },()=>{console.log(this.state.xml)})
     }
 
+    updateXML = (path, payload) => {
+        console.log("in update !")
+        console.log(path.length)
+        console.log(payload)
+    }
+
     componentDidMount(){
         this.setState({
             xml : this.props.location.state.xml
@@ -60,6 +66,7 @@ class Book extends React.Component{
         return(
             <div>
                 <App insertXml={this.insertXML}/>
+                <App updateXml={this.updateXML}/>
             </div>
         )
     }
