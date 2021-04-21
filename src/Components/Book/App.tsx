@@ -8,7 +8,7 @@ import { Classification } from './image-segmentation/classification';
 import { defaultState } from './default-state';
 import { Row } from './ui';
 
-class App extends Component <{insertXml : any},{}>{
+class App extends Component <{insertXml : any, updateXML : any},{}>{
   state = defaultState;
   onChange = (classification: ClassificationType) =>
     this.setState({ ...this.state, classification });

@@ -8,11 +8,11 @@ class Book extends React.Component{
         xml : null
     }
 
-    insertXML = (path) => {
+    insertXML = (path) => { 
         console.log("in insert !")
         var xml = this.state.xml;
         if(path.length === 1){
-            var newChap = xml.createElement("chapter");
+            var newChap = xml.createElement("chapter"); 
             var titleText = xml.createTextNode("");
             var newTitle = xml.createElement("title");
             newTitle.appendChild(titleText);
@@ -32,6 +32,10 @@ class Book extends React.Component{
         this.setState({
             xml : xml
         },()=>{console.log(this.state.xml)})
+    }
+
+    updateXML = (path, payload) => {
+        /* */
     }
 
     componentDidMount(){
@@ -59,7 +63,7 @@ class Book extends React.Component{
     render(){
         return(
             <div>
-                <App insertXml={this.insertXML}/>
+                <App insertXml={this.insertXML} updateXML = {this.updateXML}/>
             </div>
         )
     }
