@@ -2,6 +2,7 @@ import React from "react";
 import '../App.css'
 import Upload from './Upload/index'
 import BookFromScratch from "./Upload/index1";
+import XmlToPdf from './xmlToPdf'
 
 export default class HomeComponent extends React.Component {
 
@@ -22,7 +23,7 @@ export default class HomeComponent extends React.Component {
         };
         return (
             <div>
-                <h1 style={descText}> Description of what the application does? </h1>
+                <h1 style={descText}> Description of what the application does maybe? </h1>
                 <div style={funStyle}>
                     <div>
                         <h1 style={descText}>CRUD operations on an existing book/xml file </h1>
@@ -34,6 +35,7 @@ export default class HomeComponent extends React.Component {
                         <BookFromScratch />
                     </div>
                 </div>
+                <XmlToPdf /> 
             </div>
         );
     }

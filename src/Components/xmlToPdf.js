@@ -1,36 +1,29 @@
 import React from "react";
 
-export default class xmlToPdf extends React.Component {
+export default class XmlToPdf extends React.Component {
 
+    exportAsPdf = () => {
+        console.log("exporting as pdf!")
+        const exec = require("child_process").exec
+        exec('ls', (err, stdout, stderr) => console.log(stdout))
+
+        // exec("ls -la", (error, stdout, stderr) => {
+        //     if (error) {
+        //         console.log(`error: ${error.message}`)
+        //     }
+        //     if (stderr) {
+        //         console.log(`stderr: ${stderr}`)
+        //     }
+        //     console.log(`stdout: ${stdout}`)
+        // });  
+    }
+
+    
     render() {
-        const header = {
-            flex: 10,
-            backgroundColor: 'rgb(50, 50, 100)',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-            marginTop: 40,
-            paddingTop: 50,
-            paddingBottom: 50,
-        }
-
-        const headerText = {
-            fontWeight: 'bold',
-            fontSize: 20,
-            color: '#fff',
-            textAlign: 'center',
-            padding: 10,
-        }
-
-
-        const pdf = require('xml-to-pdf');
-        const basePath = '../../XML/ex2.xml';
-        const destFile = '../../pdf/test.pdf'
-
-        pdf.toFile(xml, basePath, destFile, (err) => { });
         return (
             <div>
-                <h1> HOLAA </h1>
+                <h1> Hi </h1>
+                <button onClick={this.exportAsPdf}>To PDF</button>
             </div>
         );
     }
