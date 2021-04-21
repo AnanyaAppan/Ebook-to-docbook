@@ -40,7 +40,7 @@ class Upload extends React.Component{
         return(
             <div>
                 <input type="file" onChange={this.onChange} />
-                <button onClick={this.onUpload}></button>
+                <button onClick={this.onUpload}>Upload</button>
             </div>
         )
     }

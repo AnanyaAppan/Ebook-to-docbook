@@ -2,7 +2,8 @@ import { DropdownOption } from './types';
 
 export const addDropdownOption = (
   options: DropdownOption[] = [],
-  path: number[]
+  path: number[],
+  insertXml : any
 ): DropdownOption[] => {
   if (path.length === 0) {
     const emptyOption = {
@@ -16,12 +17,13 @@ export const addDropdownOption = (
 
   const index = path[0];
   const optionToTraverse = options[index];
+  if(insertXml != null) insertXml(path);
 
   return [
     ...options.slice(0, index),
     {
       ...optionToTraverse,
-      options: addDropdownOption(optionToTraverse.options, path.slice(1))
+      options: addDropdownOption(optionToTraverse.options, path.slice(1),null)
     },
     ...options.slice(index + 1)
   ];
@@ -72,7 +74,6 @@ export const updateDropdownOption = (
 
   const index = path[0];
   const optionToUpdate = options[index];
-
   return [
     ...options.slice(0, index),
     {

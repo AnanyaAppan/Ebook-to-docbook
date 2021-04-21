@@ -8,7 +8,7 @@ import { Classification } from './image-segmentation/classification';
 import { defaultState } from './default-state';
 import { Row } from './ui';
 
-class App extends Component {
+class App extends Component <{insertXml : any},{}>{
   state = defaultState;
   onChange = (classification: ClassificationType) =>
     this.setState({ ...this.state, classification });
@@ -40,6 +40,7 @@ class App extends Component {
               onChange={this.onChange}
               onDropdownClick={this.dropdownClicked}
               onClose={this.dropdownClosed}
+              insertXml={this.props.insertXml}
             />
             <Classification
               highlighted={false}

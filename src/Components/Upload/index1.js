@@ -1,4 +1,5 @@
 import React from "react";
+import {withRouter} from 'react-router-dom';
 
 class BookFromScratch extends React.Component {
     componentDidMount() {
@@ -17,32 +18,32 @@ class BookFromScratch extends React.Component {
         })
     }
 
-    onUpload = () => {
-        var fr = new FileReader();
-        fr.onload = async (e) => {
-            const text = (e.target.result)
-            console.log(text)
-            this.setState({
-                text: e.target.result
-            })
-            var parser = new DOMParser();
-            var xmlDoc = parser.parseFromString(this.state.text, "text/xml");
-            console.log(xmlDoc.getElementsByTagName("title")[0].childNodes[0].nodeValue);
-        };
-        fr.readAsText(this.state.selectedFile);
+    onUpload = () => {    
+        const start_text = '<book xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0"></book>';
+        var parser = new DOMParser();
+        var xmlDoc = parser.parseFromString(start_text, "text/xml");
+        console.log(xmlDoc.documentElement.childNodes);
+        const bookTitle = prompt('Please enter book title');
+        var titleText = xmlDoc.createTextNode(bookTitle);
+        var title = xmlDoc.createElement("title");
+        title.appendChild(titleText);
+        xmlDoc.documentElement.appendChild(title);
+        this.props.history.push({
+            pathname:"/book",
+            state:{xml:xmlDoc}
+        });
     }
 
     render() {
         return (
             <div>
-                <input type="file" onChange={this.onChange} />
-                <button onClick={this.onUpload}></button>
+                <button onClick={this.onUpload}>Click to start!</button>
             </div>
         )
     }
 }
 
-export default BookFromScratch;
+export default withRouter(BookFromScratch);
 
 
 

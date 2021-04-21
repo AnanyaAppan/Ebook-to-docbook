@@ -58,10 +58,11 @@ export function Dropdown({
   onClose,
   classification,
   onDropdownClick,
-  onChange
+  onChange,
+  insertXml
 }: DropdownProps) {
   const topLevelOptions = classification.options;
-  const displayOptions = traverseToCurrentPage(topLevelOptions, dropdownPath);
+  const displayOptions = topLevelOptions.length? traverseToCurrentPage(topLevelOptions, dropdownPath) : [];
 
   const updateDropdown = (dropdownOptions: DropdownOption[]): void => {
     return onChange({
@@ -81,7 +82,7 @@ export function Dropdown({
   };
 
   const onAddDropdown = () => {
-    updateDropdown(addDropdownOption(topLevelOptions, dropdownPath));
+    updateDropdown(addDropdownOption(topLevelOptions, dropdownPath, insertXml));
   };
 
   const onRemoveDropdown = (index: number) => () => {
@@ -115,7 +116,7 @@ export function Dropdown({
 
   return (
     <SideBarStyles>
-      <SettingsTitle>{getTitle(topLevelOptions, dropdownPath)}</SettingsTitle>
+      <SettingsTitle>{topLevelOptions.length? getTitle(topLevelOptions, dropdownPath) : ""}</SettingsTitle>
       <Column>
         <div
           style={{
