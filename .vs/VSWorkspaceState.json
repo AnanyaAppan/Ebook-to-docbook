@@ -4,8 +4,10 @@
     "\\src",
     "\\src\\Components",
     "\\src\\Components\\Book",
-    "\\src\\Screens"
+    "\\src\\Components\\Book\\app",
+    "\\src\\Components\\Upload",
+    "\\src\\Screens",
+    "\\XML"
   ],
-  "SelectedNode": "\\src\\Components\\BodyComponent.js",
   "PreviewInSolutionExplorer": false
 }
