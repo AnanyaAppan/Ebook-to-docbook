@@ -22,7 +22,7 @@ export default class XmlToPdf extends React.Component {
     render() {
         return (
             <div>
-                <h1> Hi </h1>
+                <h3> Convert to pdf</h3>
                 <button onClick={this.exportAsPdf}>To PDF</button>
             </div>
         );
