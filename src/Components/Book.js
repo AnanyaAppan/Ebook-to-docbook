@@ -40,6 +40,7 @@ class Book extends React.Component{
         console.log(payload.value)
         console.log(indexToUpdate)
         var xml = this.state.xml;
+        console.log("lolol",xml.documentElement);
         if (path.length === 1) {
             xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0].childNodes[0].nodeValue = payload.value
         }

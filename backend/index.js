@@ -3,6 +3,7 @@ const app = express();
 app.use(express.json());
 
 app.post('/api/pdf', (req, res)=> {
+    console.log(req.body);
     const xml = req.body.xml;
     var fs = require('fs');
     var writeStream = fs.createWriteStream("MyXML.xml");
@@ -31,10 +32,17 @@ app.post('/api/pdf', (req, res)=> {
         }
         console.log(`stdout: ${stdout}`);
     });
-    var data =fs.readFileSync('MyBook.pdf');
-    res.contentType("application/pdf");
-    res.send({"pdf":data});
+    var file = fs.createReadStream('MyBook.pdf');
+    var stat = fs.statSync('MyBook.pdf');
+    res.setHeader('Content-Length', stat.size);
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=quote.pdf');
+    file.pipe(res);
 });
+
+//PORT ENVIRONMENT VARIABLE
+const port = process.env.PORT || 8080;
+app.listen(port, () => console.log(`Listening on port ${port}..`));
 
 // const xml = '<book xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0"><title>lol</title></book>';
 // var fs = require('fs');
