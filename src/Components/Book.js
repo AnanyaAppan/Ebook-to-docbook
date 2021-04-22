@@ -36,15 +36,19 @@ class Book extends React.Component{
 
     updateXML = (path, payload, indexToUpdate) => {
         console.log("in update !")
-        console.log(path)
+        /*console.log(path)
         console.log(payload.value)
-        console.log(indexToUpdate)
+        console.log(indexToUpdate)*/
         var xml = this.state.xml;
         if (path.length === 1) {
-            xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0].childNodes[0].nodeValue = payload.value
+            console.log(path[0])
+            if (xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0]) {
+                xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0].childNodes[0].nodeValue = payload.value
+            }
         }
-        else if (path.len === 2) {
-            xml.documentElement.childNodes[path[1] + 1].childNodes[1 + indexToUpdate].childNodes[0].nodeValue = payload.value
+        else if (path.length === 2) {
+            console.log(xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1].childNodes[0])
+            xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1].childNodes[0].nodeValue = payload.value
         }
         this.setState({
             xml: xml
