@@ -17,7 +17,7 @@ export const defaultState: State = {
       {
         value: 'Book Title',
         label : 'Book Title',
-        options: [{
+       /* options: [{
           value: 'Chapter 1',
           label: 'Chapter 1',
           options: [
@@ -48,7 +48,8 @@ export const defaultState: State = {
               options: []
             }  
           ]
-        }]
+        }]*/
+        options: []
       },
     ]
     // options: [
