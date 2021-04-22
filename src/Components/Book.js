@@ -42,12 +42,15 @@ class Book extends React.Component{
         var xml = this.state.xml;
         if (path.length === 1) {
             console.log(path[0])
+            /*console.log(xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0].nodeValue)*/
             if (xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0]) {
                 xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0].childNodes[0].nodeValue = payload.value
             }
         }
         else if (path.length === 2) {
-            console.log(xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1].childNodes[0])
+            console.log("inside 2")
+            console.log(xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1].childNodes[0].nodeValue)
+            console.log("before alloting")
             xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1].childNodes[0].nodeValue = payload.value
         }
         this.setState({
