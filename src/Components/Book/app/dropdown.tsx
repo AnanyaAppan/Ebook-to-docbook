@@ -63,9 +63,7 @@ export function Dropdown({
   updateXml
 }: DropdownProps) {
   const topLevelOptions = classification.options;
-  const displayOptions = topLevelOptions.length
-    ? traverseToCurrentPage(topLevelOptions, dropdownPath)
-    : [];
+  const displayOptions = traverseToCurrentPage(topLevelOptions, dropdownPath);
 
   const updateDropdown = (dropdownOptions: DropdownOption[]): void => {
     return onChange({
@@ -126,7 +124,7 @@ export function Dropdown({
   return (
     <SideBarStyles>
       <SettingsTitle>
-        {topLevelOptions.length ? getTitle(topLevelOptions, dropdownPath) : ""}
+        {getTitle(topLevelOptions, dropdownPath) }
       </SettingsTitle>
       <Column>
         <div

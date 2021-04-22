@@ -41,11 +41,10 @@ class Book extends React.Component{
         console.log(indexToUpdate)
         var xml = this.state.xml;
         if (path.length === 1) {
-            console.log("path len 1")
-            xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0].nodeValue = payload.value
+            xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0].childNodes[0].nodeValue = payload.value
         }
         else if (path.len === 2) {
-            xml.documentElement.childNodes[path[1] + 1].childNodes[1 + indexToUpdate].nodeValue = payload.value
+            xml.documentElement.childNodes[path[1] + 1].childNodes[1 + indexToUpdate].childNodes[0].nodeValue = payload.value
         }
         this.setState({
             xml: xml
