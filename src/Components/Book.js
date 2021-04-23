@@ -63,9 +63,12 @@ class Book extends React.Component{
             var temp_new = this.state.temp_new;
             var options_dict = this.state.options_dict;
             var chapters =  this.state.xml.documentElement.childNodes;
-            temp_new['label'] = Title;
-            temp_new['value'] = Title;
+            // temp_new['label'] = titleText;
+            // temp_new['value'] = titleText;
+             temp_new['label'] = '';
+            temp_new['value'] = '';
             temp_new['options'] = [];
+            console.log('temp_new ', temp_new);
             for(var j = 1; j < chapters.length; j++){
                 var temp_new1 = {};
                 var temp = [];
@@ -84,8 +87,9 @@ class Book extends React.Component{
                 }
                 options_dict.push(temp);
                 console.log('hehedict', temp);
-                console.log('heheooptions', temp_new);
             }
+            console.log('optionsdict ', options_dict);
+            console.log('heheooptions', temp_new);
             // console.log("dict", options_dict);
             // var node, childNodes = this.state.xml.getElementsByTagName("chapter")[0].childNodes;
         });
