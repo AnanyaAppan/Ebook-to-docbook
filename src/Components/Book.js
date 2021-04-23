@@ -51,7 +51,6 @@ class Book extends React.Component{
         }
         else if (path.length === 2) {
             console.log("inside 2")
-            console.log(xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1].childNodes[0].nodeValue)
             console.log("before alloting")
             xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1].childNodes[0].nodeValue = payload.value
         }
