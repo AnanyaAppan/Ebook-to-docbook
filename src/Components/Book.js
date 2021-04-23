@@ -73,14 +73,14 @@ class Book extends React.Component{
                 var temp_new1 = {};
                 var temp = [];
                 temp.push(chapters[j]);
-                temp_new1['label'] = chapters[j].Title;
-                temp_new1['value'] = chapters[j].Title;
-                temp_new['options'].append(temp_new1);
                 var node, chapterContent = chapters[j].childNodes;
                 for(var i = 0; i < chapterContent.length; i++)
                 {
                     node = chapterContent[i];
                     temp.push(node);
+                    temp_new1['label'] = node;
+                    temp_new1['value'] = node;
+                    temp_new['options'].append(temp_new1);
                     if(node.nodeType !== Node.TEXT_NODE) {
                         console.log(node.textContent);
                     }
