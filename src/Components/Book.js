@@ -81,8 +81,8 @@ class Book extends React.Component{
                     node = chapterContent[i];
                     temp.push(node);
                     var temp_new2 = {};
-                    temp_new2['label'] = para_content;
-                    temp_new2['value'] = para_content;
+                    temp_new2['label'] = node.nodeValue;
+                    temp_new2['value'] = node.nodeValue;
                     temp_new2['options'] = [];
                     temp_new1['options'].push(temp_new2); 
                     console.log(temp_new)
