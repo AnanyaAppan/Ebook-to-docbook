@@ -63,30 +63,35 @@ class Book extends React.Component{
             var temp_new = this.state.temp_new;
             var options_dict = this.state.options_dict;
             var chapters =  this.state.xml.documentElement.childNodes;
-            temp_new['label'] = Title;
-            temp_new['value'] = Title;
+            // temp_new['label'] = titleText;
+            // temp_new['value'] = titleText;
+            temp_new['label'] = '';
+            temp_new['value'] = '';
             temp_new['options'] = [];
+            console.log('temp_new ', temp_new);
             for(var j = 1; j < chapters.length; j++){
                 var temp_new1 = {};
                 var temp = [];
-                temp.push(chapters[j]);
-                temp_new1['label'] = chapters[j].Title;
-                temp_new1['value'] = chapters[j].Title;
-                temp_new['options'].append(temp_new1);
                 var node, chapterContent = chapters[j].childNodes;
-                for(var i = 0; i < chapterContent.length; i++)
+                /* here insert title of chapter chapters[j].childNodes[0].nodeValue as label and value of temp_new1*/
+                for(var i = 1; i < chapterContent.length; i++)
                 {
                     node = chapterContent[i];
                     temp.push(node);
+                    temp_new1['label'] = node.nodeValue; /* here temp_new1['options'].push({'label':para_content 'value':para_content 'options':[]})*/ 
+                    temp_new1['value'] = node.nodeValue;
+                    console.log(temp_new)
+                    temp_new['options'].push(temp_new1);
                     if(node.nodeType !== Node.TEXT_NODE) {
                         console.log(node.textContent);
                     }
                 }
                 options_dict.push(temp);
                 console.log('hehedict', temp);
-                console.log('heheooptions', temp_new);
             }
-            console.log("dict", options_dict);
+            console.log('optionsdict ', options_dict);
+            console.log('heheooptions', temp_new);
+            // console.log("dict", options_dict);
             // var node, childNodes = this.state.xml.getElementsByTagName("chapter")[0].childNodes;
         });
     }
