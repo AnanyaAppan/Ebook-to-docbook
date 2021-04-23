@@ -4,11 +4,16 @@ import App from "./Book/App.tsx";
 
 class Book extends React.Component{
 
-    state = {
-        xml : null
+    constructor(props){
+        super(props)
+        this.state = {
+            xml : null
+        }
+        this.insertXML = this.insertXML.bind(this);
+        this.updateXML = this.updateXML.bind(this);
     }
 
-    insertXML = (path) => { 
+    insertXML = (path) =>  { 
         console.log("in insert !")
         var xml = this.state.xml;
         if(path.length === 1){
@@ -35,20 +40,13 @@ class Book extends React.Component{
     }
 
     updateXML = (path, payload, indexToUpdate) => {
-        console.log("in update !")
-        /*console.log(path)
-        console.log(payload.value)
-        console.log(indexToUpdate)*/
         var xml = this.state.xml;
-        console.log("lolol",xml.documentElement);
         if (path.length === 1) {
-            console.log(path[0])
             if (xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0]) {
                 xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0].childNodes[0].nodeValue = payload.value
             }
         }
         else if (path.length === 2) {
-            console.log(xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1].childNodes[0])
             xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1].childNodes[0].nodeValue = payload.value
         }
         this.setState({
