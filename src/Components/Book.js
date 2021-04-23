@@ -5,10 +5,11 @@ import App from "./Book/App.tsx";
 class Book extends React.Component{
 
     state = {
-        xml : null
+        xml : null,
+        options_dict : []
     }
 
-    insertXML = (path) => { 
+    insertXML = (path) =>  { 
         console.log("in insert !")
         var xml = this.state.xml;
         if(path.length === 1){
@@ -35,20 +36,13 @@ class Book extends React.Component{
     }
 
     updateXML = (path, payload, indexToUpdate) => {
-        console.log("in update !")
-        /*console.log(path)
-        console.log(payload.value)
-        console.log(indexToUpdate)*/
         var xml = this.state.xml;
-        console.log("lolol",xml.documentElement);
         if (path.length === 1) {
-            console.log(path[0])
             if (xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0]) {
                 xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0].childNodes[0].nodeValue = payload.value
             }
         }
         else if (path.length === 2) {
-            console.log(xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1].childNodes[0])
             xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1].childNodes[0].nodeValue = payload.value
         }
         this.setState({
@@ -56,23 +50,32 @@ class Book extends React.Component{
         }, () => { console.log(this.state.xml) })
     }
 
+
     componentDidMount(){
+        console.log('Hehehehehehehe');
         this.setState({
             xml : this.props.location.state.xml
         },()=>{
             // console.log(this.state.xml.getElementsByTagName("title")[0].childNodes[0].nodeValue)
             console.log(this.state.xml)
+            var options_dict = this.state.options_dict;
             var chapters =  this.state.xml.documentElement.childNodes;
             for(var j = 1; j < chapters.length; j++){
+                var temp = [];
+                temp.push(chapters[j]);
                 var node, chapterContent = chapters[j].childNodes;
                 for(var i = 0; i < chapterContent.length; i++)
                 {
                     node = chapterContent[i];
+                    temp.push(node);
                     if(node.nodeType !== Node.TEXT_NODE) {
                         console.log(node.textContent);
                     }
                 }
+                options_dict.push(temp);
+                console.log('hehedict', temp);
             }
+            // console.log("dict", options_dict);
             // var node, childNodes = this.state.xml.getElementsByTagName("chapter")[0].childNodes;
         });
     }

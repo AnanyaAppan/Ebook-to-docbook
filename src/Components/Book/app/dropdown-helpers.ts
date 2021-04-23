@@ -85,7 +85,7 @@ export const updateDropdownOption = (
         path.slice(1),
         indexToUpdate,
         payload,
-        updateXml
+        null
       )
     },
     ...options.slice(index + 1)
