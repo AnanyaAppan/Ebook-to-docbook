@@ -75,7 +75,7 @@ class Book extends React.Component{
                 options_dict.push(temp);
                 console.log('hehedict', temp);
             }
-            // console.log("dict", options_dict);
+            console.log("dict", options_dict);
             // var node, childNodes = this.state.xml.getElementsByTagName("chapter")[0].childNodes;
         });
     }
