@@ -1,3 +1,4 @@
+import { Title } from "@material-ui/icons";
 import React from "react";
 import {withRouter} from 'react-router-dom';
 import App from "./Book/App.tsx";
@@ -6,7 +7,8 @@ class Book extends React.Component{
 
     state = {
         xml : null,
-        options_dict : []
+        options_dict : [],
+        temp_new: {}
     }
 
     insertXML = (path) =>  { 
@@ -58,9 +60,17 @@ class Book extends React.Component{
         },()=>{
             // console.log(this.state.xml.getElementsByTagName("title")[0].childNodes[0].nodeValue)
             console.log(this.state.xml)
+            var temp_new = this.state.temp_new;
             var options_dict = this.state.options_dict;
             var chapters =  this.state.xml.documentElement.childNodes;
+            // temp_new['label'] = titleText;
+            // temp_new['value'] = titleText;
+             temp_new['label'] = '';
+            temp_new['value'] = '';
+            temp_new['options'] = [];
+            console.log('temp_new ', temp_new);
             for(var j = 1; j < chapters.length; j++){
+                var temp_new1 = {};
                 var temp = [];
                 temp.push(chapters[j]);
                 var node, chapterContent = chapters[j].childNodes;
@@ -68,6 +78,9 @@ class Book extends React.Component{
                 {
                     node = chapterContent[i];
                     temp.push(node);
+                    temp_new1['label'] = node;
+                    temp_new1['value'] = node;
+                    temp_new['options'].append(temp_new1);
                     if(node.nodeType !== Node.TEXT_NODE) {
                         console.log(node.textContent);
                     }
@@ -75,6 +88,8 @@ class Book extends React.Component{
                 options_dict.push(temp);
                 console.log('hehedict', temp);
             }
+            console.log('optionsdict ', options_dict);
+            console.log('heheooptions', temp_new);
             // console.log("dict", options_dict);
             // var node, childNodes = this.state.xml.getElementsByTagName("chapter")[0].childNodes;
         });
