@@ -1,9 +1,12 @@
 const express = require('express');
 const app = express();
+var cors = require('cors');
+const { response } = require('express');
 app.use(express.json());
+app.use(cors())
 
 app.post('/api/pdf', (req, res)=> {
-    console.log(req.body);
+    console.log(req.body.xml);
     const xml = req.body.xml;
     var fs = require('fs');
     var writeStream = fs.createWriteStream("MyXML.xml");
@@ -17,27 +20,28 @@ app.post('/api/pdf', (req, res)=> {
         }
         if (stderr) {
             console.log(`stderr: ${stderr}`);
-            return;
+            // return;
         }
         console.log(`stdout: ${stdout}`);
+        exec("fop mybook.fo -pdf MyBook.pdf", (error, stdout, stderr) => {
+            if (error) {
+                console.log(`error: ${error.message}`);
+                return;
+            }
+            if (stderr) {
+                console.log(`stderr: ${stderr}`);
+                // return;
+            }
+            // console.log(`stdout: ${stdout}`);
+            // var file = fs.createReadStream('MyBook.pdf');
+            // var stat = fs.statSync('MyBook.pdf');
+            // res.setHeader('Content-Length', stat.size);
+            // res.setHeader('Content-Type', 'application/pdf');
+            // res.setHeader('Content-Disposition', 'attachment; filename=quote.pdf');
+            // file.pipe(res);
+            res.download('MyBook.pdf')
+        });
     });
-    exec("fop mybook.fo -pdf MyBook.pdf", (error, stdout, stderr) => {
-        if (error) {
-            console.log(`error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            return;
-        }
-        console.log(`stdout: ${stdout}`);
-    });
-    var file = fs.createReadStream('MyBook.pdf');
-    var stat = fs.statSync('MyBook.pdf');
-    res.setHeader('Content-Length', stat.size);
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename=quote.pdf');
-    file.pipe(res);
 });
 
 app.post('/api/html', (req, res)=> {
@@ -61,11 +65,12 @@ app.post('/api/html', (req, res)=> {
         console.log(`stdout: ${stdout}`);
     });
       
-    var file = fs.createReadStream('MyBook.html');
+    // var file = fs.createReadStream('MyBook.html');
     var stat = fs.statSync('MyBook.html');
     res.setHeader('Content-Length', stat.size);
     res.setHeader('Content-Type', 'text/html');
-    file.pipe(res);
+    // file.pipe(res);
+    res.download('MyBook.html');
 });
 
 //PORT ENVIRONMENT VARIABLE
