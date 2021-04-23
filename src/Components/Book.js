@@ -6,7 +6,8 @@ class Book extends React.Component{
 
     state = {
         xml : null,
-        options_dict : []
+        options_dict : [],
+        temp: {}
     }
 
     insertXML = (path) =>  { 
