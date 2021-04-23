@@ -40,6 +40,34 @@ app.post('/api/pdf', (req, res)=> {
     file.pipe(res);
 });
 
+app.post('/api/html', (req, res)=> {
+    console.log(req.body);
+    const xml = req.body.xml;
+    const path = require('path');
+    var fs = require('fs');
+    var writeStream = fs.createWriteStream("MyXML.xml");
+    writeStream.write(xml);
+    writeStream.end();
+    const { exec } = require("child_process");
+    exec("xsltproc -xinclude -o MyBook.html /usr/share/xml/docbook/stylesheet/docbook-xsl-ns/xhtml-1_1/docbook.xsl MyXML.xml", (error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    });
+      
+    var file = fs.createReadStream('MyBook.html');
+    var stat = fs.statSync('MyBook.html');
+    res.setHeader('Content-Length', stat.size);
+    res.setHeader('Content-Type', 'text/html');
+    file.pipe(res);
+});
+
 //PORT ENVIRONMENT VARIABLE
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}..`));

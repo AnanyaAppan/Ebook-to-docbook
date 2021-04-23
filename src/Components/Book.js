@@ -1,3 +1,4 @@
+import { Title } from "@material-ui/icons";
 import React from "react";
 import {withRouter} from 'react-router-dom';
 import App from "./Book/App.tsx";
@@ -6,7 +7,8 @@ class Book extends React.Component{
 
     state = {
         xml : null,
-        options_dict : []
+        options_dict : [],
+        temp_new: {}
     }
 
     insertXML = (path) =>  { 
@@ -58,11 +60,19 @@ class Book extends React.Component{
         },()=>{
             // console.log(this.state.xml.getElementsByTagName("title")[0].childNodes[0].nodeValue)
             console.log(this.state.xml)
+            var temp_new = this.state.temp_new;
             var options_dict = this.state.options_dict;
             var chapters =  this.state.xml.documentElement.childNodes;
+            temp_new['label'] = Title;
+            temp_new['value'] = Title;
+            temp_new['options'] = [];
             for(var j = 1; j < chapters.length; j++){
+                var temp_new1 = {};
                 var temp = [];
                 temp.push(chapters[j]);
+                temp_new1['label'] = chapters[j].Title;
+                temp_new1['value'] = chapters[j].Title;
+                temp_new['options'].append(temp_new1);
                 var node, chapterContent = chapters[j].childNodes;
                 for(var i = 0; i < chapterContent.length; i++)
                 {
@@ -74,6 +84,7 @@ class Book extends React.Component{
                 }
                 options_dict.push(temp);
                 console.log('hehedict', temp);
+                console.log('heheooptions', temp_new);
             }
             console.log("dict", options_dict);
             // var node, childNodes = this.state.xml.getElementsByTagName("chapter")[0].childNodes;

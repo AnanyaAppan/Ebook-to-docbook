@@ -52,55 +52,5 @@ export const defaultState: State = {
         options: []
       },
     ]
-    // options: [
-    //   {
-    //     value: 'root',
-    //     label: 'Root',
-    //     options: [
-    //       {
-    //         value: 'red',
-    //         label: 'Red',
-    //         options: [
-    //           {
-    //             label: 'Pinot Noir',
-    //             value: 'pinot_noir',
-    //             options: []
-    //           },
-    //           {
-    //             label: 'Cabernet',
-    //             value: 'cabernet',
-    //             options: []
-    //           },
-    //           {
-    //             label: 'Merlot',
-    //             value: 'merlot',
-    //             options: []
-    //           }
-    //         ]
-    //       },
-    //       {
-    //         value: 'white',
-    //         label: 'White',
-    //         options: [
-    //           {
-    //             label: 'Chardonnay',
-    //             value: 'chardonnay',
-    //             options: []
-    //           },
-    //           {
-    //             label: 'Pinot Grigio',
-    //             value: 'pinot_grigio',
-    //             options: []
-    //           },
-    //           {
-    //             label: 'Riesling',
-    //             value: 'riesling',
-    //             options: []
-    //           }
-    //         ]
-    //       }
-    //     ]
-    //   }
-    // ]
   }
 };
