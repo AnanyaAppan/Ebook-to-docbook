@@ -52,17 +52,40 @@ class Book extends React.Component{
         }, () => { console.log(this.state.xml) })
     }
 
+    walk = (node)=> {
+        var child, next;
+        var reBlank = /^\s*$/;
+        switch (node.nodeType) {
+            case 3: // Text node
+                if (reBlank.test(node.nodeValue)) {
+                    node.parentNode.removeChild(node);
+                }
+                break;
+            case 1: // Element node
+            case 9: // Document node
+                child = node.firstChild;
+                while (child) {
+                    next = child.nextSibling;
+                    this.walk(child);
+                    child = next;
+                }
+                break;
+        }
+    }
+
 
     componentDidMount(){
         console.log('Hehehehehehehe');
         this.setState({
             xml : this.props.location.state.xml
         },()=>{
+            this.walk(this.state.xml);
             // console.log(this.state.xml.getElementsByTagName("title")[0].childNodes[0].nodeValue)
             console.log(this.state.xml)
             var temp_new = this.state.temp_new;
             var options_dict = this.state.options_dict;
             var chapters =  this.state.xml.documentElement.childNodes;
+            console.log(chapters)
             // temp_new['label'] = titleText;
             // temp_new['value'] = titleText;
             temp_new['label'] = '';
@@ -74,26 +97,27 @@ class Book extends React.Component{
                 var temp = [];
                 var node, chapterContent = chapters[j].childNodes;
                 /* here insert title of chapter chapters[j].childNodes[0].nodeValue as label and value of temp_new1*/
-                temp_new1['value'] = chapters[j].childNodes[0].nodeValue;
-                temp_new1['label'] = chapters[j].childNodes[0].nodeValue;
+                temp_new1['value'] = chapters[j].childNodes[0].textContent;
+                temp_new1['label'] = chapters[j].childNodes[0].textContent;
+                temp_new1['options'] = []
                 for(var i = 1; i < chapterContent.length; i++)
                 {
                     node = chapterContent[i];
                     temp.push(node);
                     var temp_new2 = {};
-                    temp_new2['label'] = node.nodeValue;
-                    temp_new2['value'] = node.nodeValue;
+                    temp_new2['label'] = node.textContent;
+                    temp_new2['value'] = node.textContent;
                     temp_new2['options'] = [];
                     temp_new1['options'].push(temp_new2); 
                     console.log(temp_new)
-                    temp_new['options'].push(temp_new1);
                     if(node.nodeType !== Node.TEXT_NODE) {
                         console.log(node.textContent);
                     }
                 }
-                options_dict.push(temp);
+                temp_new['options'].push(temp_new1);
                 console.log('hehedict', temp);
             }
+            options_dict.push(temp);
             console.log('optionsdict ', options_dict);
             console.log('heheooptions', temp_new);
             // console.log("dict", options_dict);
