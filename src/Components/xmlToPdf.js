@@ -3,13 +3,15 @@ import axios from 'axios';
 import download from 'downloadjs'
 
 export default class XmlToPdf extends React.Component {
-  exportAsPdf = () => {
+
+  exportAsPdf = (xmlString) => {
     var data = {
-      xml:
-        "<book xmlns='http://docbook.org/ns/docbook' xmlns:xi='http://www.w3.org/2001/XInclude' version='5.0'><title>Hola</title></book>"
+      xml:xmlString
     };
     axios
-      .post("http://localhost:8080/api/pdf", data)
+      .post("http://localhost:8080/api/pdf", data,{
+        responseType: 'blob'
+      })
       .then(response => {
         download(response.data, "myBook.pdf", 'application/pdf')
         console.log(response)
@@ -26,7 +28,7 @@ export default class XmlToPdf extends React.Component {
     return (
       <div>
         <h3> Convert to pdf</h3>
-        <button onClick={this.exportAsPdf}>To PDF</button>
+        <button onClick={this.exportAsPdf.bind(this,this.props.xml)}>To PDF</button>
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Input } from '@material-ui/core';
+import RTFInput from './RTFInput'
 import {Delete, ChevronRight} from '@material-ui/icons';
 import { OptionFieldProps } from './types';
 import { StyledOptionField, Spacer, StyledIcon } from './styled-components';
@@ -15,10 +16,17 @@ export function OptionField({
   remove,
   isDropdown,
   onDropdownClick,
-  options
+  options,
+  dropdownPath
 }: OptionFieldProps) {
   return (
     <StyledOptionField>
+      {dropdownPath.length==2?
+      <RTFInput
+        onChange={onChange}
+        options={options}
+        value={label}
+      />:
       <Input
         placeholder="New option"
         style={{ fontSize: '14px', display: 'block' }}
@@ -32,6 +40,7 @@ export function OptionField({
         onKeyUp={(e) => e.key === 'Enter' && onEnter()}
         value={label}
       />
+      }
       <Spacer />
       {/* <StyledIcon onClick={remove}>delete</StyledIcon> */}
       <Delete onClick={remove}/>

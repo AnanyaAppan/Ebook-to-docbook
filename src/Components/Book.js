@@ -2,14 +2,45 @@ import { Title } from "@material-ui/icons";
 import React from "react";
 import {withRouter} from 'react-router-dom';
 import App from "./Book/App.tsx";
+import XmlToPdf from "./xmlToPdf";
+import axios from 'axios';
 
 class Book extends React.Component{
+
+    constructor(props){
+        super(props);
+        this.getDocbookPara = this.getDocbookPara.bind(this);
+    }
 
     state = {
         xml : null,
         options_dict : [],
-        temp_new: {}
+        temp_new: {},
+        docbkStr:""
     }
+
+    serializer = new XMLSerializer();
+    parser = new DOMParser();
+
+    getDocbookPara = (rtfString) => {
+        var data = {
+          rtf:rtfString
+        };
+        axios
+          .post("http://localhost:8080/api/rtf", data,{
+          })
+          .then(response => {
+            // download(response.data, "myBook.pdf", 'application/pdf')
+            // console.log(response.data)
+            this.setState({
+                docbkStr : response.data
+            })
+          })
+          .catch(error => {
+            console.error("There was an error!", error);
+            // return error;
+          });
+      };
 
     insertXML = (path) =>  { 
         console.log("in insert !")
@@ -40,12 +71,32 @@ class Book extends React.Component{
     updateXML = (path, payload, indexToUpdate) => {
         var xml = this.state.xml;
         if (path.length === 1) {
-            if (xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0]) {
-                xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0].childNodes[0].nodeValue = payload.value
-            }
+            xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0].childNodes[0].nodeValue = payload.value
         }
         else if (path.length === 2) {
-            xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1].childNodes[0].nodeValue = payload.value
+            this.getDocbookPara(payload.value);
+            console.log(this.state.docbkStr)
+            var childNode = this.parser.parseFromString(this.state.docbkStr, "text/xml");
+            console.log(childNode)
+            this.deleteXML(path,payload,indexToUpdate)
+            var nextNode = xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1]
+            xml.documentElement.childNodes[path[1] + 1].insertBefore(childNode.documentElement,nextNode);
+            // xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1].childNodes[0].nodeValue = payload.value
+        }
+        this.setState({
+            xml: xml
+        }, () => { console.log(this.state.xml) })
+    }
+
+    deleteXML = (path, payload, indexToUpdate) => {
+        var xml = this.state.xml;
+        if (path.length === 1) {
+            var delNode = xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0]
+            delNode.parentNode.removeChild(delNode);
+        }
+        else if (path.length === 2) {
+            var delNode = xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1]
+            delNode.parentNode.removeChild(delNode);
         }
         this.setState({
             xml: xml
@@ -130,6 +181,7 @@ class Book extends React.Component{
         return(
             <div>
                 <App insertXml={this.insertXML} updateXml = {this.updateXML}/>
+                {/* <XmlToPdf xml={this.state.xml==null? "":this.serializer.serializeToString(this.state.xml)}/> */}
             </div>
         )
     }

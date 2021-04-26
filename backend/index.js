@@ -32,13 +32,6 @@ app.post('/api/pdf', (req, res)=> {
                 console.log(`stderr: ${stderr}`);
                 // return;
             }
-            // console.log(`stdout: ${stdout}`);
-            // var file = fs.createReadStream('MyBook.pdf');
-            // var stat = fs.statSync('MyBook.pdf');
-            // res.setHeader('Content-Length', stat.size);
-            // res.setHeader('Content-Type', 'application/pdf');
-            // res.setHeader('Content-Disposition', 'attachment; filename=quote.pdf');
-            // file.pipe(res);
             res.download('MyBook.pdf')
         });
     });
@@ -71,6 +64,27 @@ app.post('/api/html', (req, res)=> {
     res.setHeader('Content-Type', 'text/html');
     // file.pipe(res);
     res.download('MyBook.html');
+});
+
+app.post('/api/rtf', (req, res)=> {
+    const rtf = req.body.rtf;
+    var fs = require('fs');
+    var writeStream = fs.createWriteStream("MyHTML.html");
+    writeStream.write(rtf);
+    writeStream.end();
+    const { exec } = require("child_process");
+    exec("pandoc -f html -t docbook MyHTML.html > temp.txt", (error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            // return;
+        }
+        console.log(`stdout: ${stdout}`);
+        res.download('temp.txt')
+    });
 });
 
 //PORT ENVIRONMENT VARIABLE

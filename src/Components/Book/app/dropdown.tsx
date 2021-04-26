@@ -106,6 +106,7 @@ export function Dropdown({
           remove={onRemoveDropdown(i)}
           isDropdown={true}
           onDropdownClick={() => onDropdownClick(i)}
+          dropdownPath={dropdownPath}
         />
       </OptionRow>
     );

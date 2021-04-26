@@ -35,7 +35,7 @@ export default class HomeComponent extends React.Component {
                         <BookFromScratch />
                     </div>
                 </div>
-                <XmlToPdf /> 
+                {/* <XmlToPdf />  */}
             </div>
         );
     }
