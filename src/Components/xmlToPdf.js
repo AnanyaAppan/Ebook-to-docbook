@@ -6,7 +6,7 @@ export default class XmlToPdf extends React.Component {
 
   exportAsPdf = (xmlString) => {
     var data = {
-      xml:xmlString
+      xml:xmlString.replace(/xmlns=""/g,"")
     };
     axios
       .post("http://localhost:8080/api/pdf", data,{

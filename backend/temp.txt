@@ -1,3 +1,5 @@
-<para>
-  <emphasis role="strong">para2</emphasis>
-</para>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="jnjmjnn">
+  <title>jnjmjnn</title>
+  <para>
+  </para>
+</section>

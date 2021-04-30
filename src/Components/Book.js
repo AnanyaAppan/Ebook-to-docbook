@@ -2,7 +2,6 @@ import { Title } from "@material-ui/icons";
 import React from "react";
 import {withRouter} from 'react-router-dom';
 import App from "./Book/App.tsx";
-import XmlToPdf from "./xmlToPdf";
 import axios from 'axios';
 
 class Book extends React.Component{
@@ -30,20 +29,16 @@ class Book extends React.Component{
           .post("http://localhost:8080/api/rtf", data,{
           })
           .then(response => {
-            // download(response.data, "myBook.pdf", 'application/pdf')
-            // console.log(response.data)
             this.setState({
                 docbkStr : response.data
             })
           })
           .catch(error => {
             console.error("There was an error!", error);
-            // return error;
           });
       };
 
     insertXML = (path) =>  { 
-        console.log("in insert !")
         var xml = this.state.xml;
         if(path.length === 1){
             var newChap = xml.createElement("chapter"); 
@@ -131,21 +126,19 @@ class Book extends React.Component{
             xml : this.props.location.state.xml
         },()=>{
             this.walk(this.state.xml);
-            // console.log(this.state.xml.getElementsByTagName("title")[0].childNodes[0].nodeValue)
+            var titleText = this.state.xml.getElementsByTagName("title")[0].childNodes[0].nodeValue
             console.log(this.state.xml)
             var temp_new = this.state.temp_new;
-            var options_dict = this.state.options_dict;
+            // var options_dict = this.state.options_dict;
             var chapters =  this.state.xml.documentElement.childNodes;
             console.log(chapters)
-            // temp_new['label'] = titleText;
-            // temp_new['value'] = titleText;
-            temp_new['label'] = '';
-            temp_new['value'] = '';
+            temp_new['label'] = titleText;
+            temp_new['value'] = titleText;
             temp_new['options'] = [];
             console.log('temp_new ', temp_new);
             for(var j = 1; j < chapters.length; j++){
                 var temp_new1 = {};
-                var temp = [];
+                // var temp = [];
                 var node, chapterContent = chapters[j].childNodes;
                 /* here insert title of chapter chapters[j].childNodes[0].nodeValue as label and value of temp_new1*/
                 temp_new1['value'] = chapters[j].childNodes[0].textContent;
@@ -154,7 +147,7 @@ class Book extends React.Component{
                 for(var i = 1; i < chapterContent.length; i++)
                 {
                     node = chapterContent[i];
-                    temp.push(node);
+                    // temp.push(node);
                     var temp_new2 = {};
                     temp_new2['label'] = node.textContent;
                     temp_new2['value'] = node.textContent;
@@ -166,11 +159,14 @@ class Book extends React.Component{
                     }
                 }
                 temp_new['options'].push(temp_new1);
-                console.log('hehedict', temp);
+                // console.log('hehedict', temp);
             }
-            options_dict.push(temp);
-            console.log('optionsdict ', options_dict);
+            // options_dict.push(temp);
+            // console.log('optionsdict ', options_dict);
             console.log('heheooptions', temp_new);
+            this.setState({
+                options_dict: [temp_new]
+            })
             // console.log("dict", options_dict);
             // var node, childNodes = this.state.xml.getElementsByTagName("chapter")[0].childNodes;
         });
@@ -178,10 +174,10 @@ class Book extends React.Component{
 
 
     render(){
+
         return(
             <div>
-                <App insertXml={this.insertXML} updateXml = {this.updateXML}/>
-                {/* <XmlToPdf xml={this.state.xml==null? "":this.serializer.serializeToString(this.state.xml)}/> */}
+                <App insertXml={this.insertXML} updateXml = {this.updateXML} xml={this.state.xml==null? "":this.serializer.serializeToString(this.state.xml)} options={this.state.options_dict}/>
             </div>
         )
     }
