@@ -11,18 +11,18 @@ import XmlToPdf from "../xmlToPdf";
 
 class App extends Component<{ insertXml: any; updateXml: any ; xml : any; options : DropdownOption[]}, {}> {
   state = defaultState;
-  componentDidUpdate(){
-    if(this.props.options != this.state.classification.options){
-      var new_state = this.state;
-      new_state.classification.options = this.props.options;
-      this.setState({
-        state : new_state
-      },()=>{
-        console.log("yoyo")
-        console.log(this.state)
-      })
-    }
-  }
+  // componentDidUpdate(){
+  //   if(this.props.options !== this.state.classification.options){
+  //     var new_state = this.state;
+  //     new_state.classification.options = this.props.options;
+  //     this.setState({
+  //       state : new_state
+  //     },()=>{
+  //       console.log("yoyo")
+  //       console.log(this.state)
+  //     })
+  //   }
+  // }
   onChange = (classification: ClassificationType) =>
     this.setState({ ...this.state, classification });
   dropdownClicked = (index: number) =>

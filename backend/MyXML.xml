@@ -1,27 +1,25 @@
-<book xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0"><title >lo</title><chapter ><title>ch1</title><para>
-  kj<emphasis role="strong">ehjjh</emphasis>bh
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0"><title >lol</title><chapter ><title>chapter1</title><para>
+  <emphasis>para</emphasis>1
 </para><para>
-  lq<emphasis>kwm</emphasis>m
-</para></chapter><chapter ><title>ch2</title><para>
-  lqed<emphasis role="underline">mkkmed</emphasis>
-</para><itemizedlist spacing="compact">
+  <emphasis role="strong">para2</emphasis>
+</para></chapter><chapter ><title>chapter2</title><orderedlist spacing="compact">
   <listitem>
     <para>
-      klqwkd
+      lik
     </para>
   </listitem>
   <listitem>
     <para>
-      kkden
+      iijfekjn
     </para>
   </listitem>
   <listitem>
     <para>
-      lkqmwksm
+      kfjaekj
     </para>
   </listitem>
-</itemizedlist><section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="jnjmjnn">
-  <title>jnjmjnn</title>
+</orderedlist></chapter><chapter ><title>ch3</title><section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="lklkek">
+  <title>lklkek</title>
   <para>
   </para>
 </section></chapter></book>
