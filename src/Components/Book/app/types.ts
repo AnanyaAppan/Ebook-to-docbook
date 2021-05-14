@@ -6,6 +6,7 @@ export type DropdownProps = {
   onChange: (c: Classification) => void;
   insertXml: any;
   updateXml: any;
+  deleteXml: any;
 };
 
 export interface OptionFieldProps {

@@ -65,6 +65,8 @@ class Book extends React.Component{
 
     updateXML = (path, payload, indexToUpdate) => {
         var xml = this.state.xml;
+        console.log(path)
+        console.log(indexToUpdate)
         if (path.length === 1) {
             xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0].childNodes[0].nodeValue = payload.value
         }
@@ -83,14 +85,15 @@ class Book extends React.Component{
         }, () => { console.log(this.state.xml) })
     }
 
-    deleteXML = (path, payload, indexToUpdate) => {
+    deleteXML = (path,indexToRemove) => {
         var xml = this.state.xml;
+        console.log("inside delete xml")
         if (path.length === 1) {
-            var delNode = xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0]
+            var delNode = xml.documentElement.childNodes[indexToRemove + 1].childNodes[0]
             delNode.parentNode.removeChild(delNode);
         }
         else if (path.length === 2) {
-            var delNode = xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1]
+            var delNode = xml.documentElement.childNodes[path[1] + 1].childNodes[indexToRemove + 1]
             delNode.parentNode.removeChild(delNode);
         }
         this.setState({

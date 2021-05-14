@@ -60,7 +60,8 @@ export function Dropdown({
   onDropdownClick,
   onChange,
   insertXml,
-  updateXml
+  updateXml,
+  deleteXml
 }: DropdownProps) {
   const topLevelOptions = classification.options;
   const displayOptions = traverseToCurrentPage(topLevelOptions, dropdownPath);
@@ -93,7 +94,7 @@ export function Dropdown({
   };
 
   const onRemoveDropdown = (index: number) => () => {
-    updateDropdown(removeDropdownOption(topLevelOptions, dropdownPath, index));
+    updateDropdown(removeDropdownOption(topLevelOptions, dropdownPath, index, deleteXml));
   };
 
   const optionFields = (displayOptions || []).map((option: any, i: number) => {
