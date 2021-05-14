@@ -59,9 +59,9 @@ app.post('/api/html', (req, res)=> {
     });
       
     // var file = fs.createReadStream('MyBook.html');
-    var stat = fs.statSync('MyBook.html');
-    res.setHeader('Content-Length', stat.size);
-    res.setHeader('Content-Type', 'text/html');
+    // var stat = fs.statSync('MyBook.html');
+    // res.setHeader('Content-Length', stat.size);
+    // res.setHeader('Content-Type', 'text');
     // file.pipe(res);
     res.download('MyBook.html');
 });
@@ -86,6 +86,19 @@ app.post('/api/rtf', (req, res)=> {
         res.download('temp.txt')
     });
 });
+
+app.post('/api/xml', (req, res)=> {
+    console.log(req.body);
+    const xml = req.body.xml;
+    const path = require('path');
+    var fs = require('fs');
+    var writeStream = fs.createWriteStream("MyXML.xml");
+    writeStream.write(xml);
+    writeStream.end();
+    
+    res.download('MyXML.xml');
+});
+
 
 //PORT ENVIRONMENT VARIABLE
 const port = process.env.PORT || 8080;
