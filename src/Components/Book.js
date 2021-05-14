@@ -3,6 +3,7 @@ import React from "react";
 import {withRouter} from 'react-router-dom';
 import App from "./Book/App.tsx";
 import axios from 'axios';
+import Search from "./search.js";
 
 class Book extends React.Component{
 
@@ -122,6 +123,11 @@ class Book extends React.Component{
         }
     }
 
+    search = (text) => {
+        console.log(text)
+        return "lol"
+    }
+
 
     componentDidMount(){
         console.log('Hehehehehehehe');
@@ -180,7 +186,7 @@ class Book extends React.Component{
 
         return(
             <div>
-                <App insertXml={this.insertXML} updateXml = {this.updateXML} deleteXml={this.deleteXML} xml={this.state.xml==null? "":this.serializer.serializeToString(this.state.xml)} options={this.state.options_dict}/>
+                <App insertXml={this.insertXML} search={this.search} updateXml = {this.updateXML} deleteXml={this.deleteXML} xml={this.state.xml==null? "":this.serializer.serializeToString(this.state.xml)} options={this.state.options_dict}/>
             </div>
         )
     }

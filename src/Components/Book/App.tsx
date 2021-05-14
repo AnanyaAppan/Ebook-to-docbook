@@ -8,8 +8,9 @@ import { Classification } from "./image-segmentation/classification";
 import { defaultState } from "./default-state";
 import { Row } from "./ui";
 import XmlToPdf from "../xmlToPdf";
+import Search from "../search";
 
-class App extends Component<{ insertXml: any; updateXml: any ; deleteXml : any; xml : any; options : DropdownOption[]}, {}> {
+class App extends Component<{ search: any; insertXml: any; updateXml: any ; deleteXml : any; xml : any; options : DropdownOption[]}, {}> {
   state = defaultState;
   // componentDidUpdate(){
   //   if(this.props.options !== this.state.classification.options){
@@ -58,12 +59,13 @@ class App extends Component<{ insertXml: any; updateXml: any ; deleteXml : any; 
               updateXml={this.props.updateXml}
               deleteXml={this.props.deleteXml}
             />
-            <Classification
+            {/* <Classification
               highlighted={false}
               answer={this.state.answer}
               onAnswer={this.onAnswer}
               field={this.state.classification}
-            />
+            /> */}
+            <Search search={this.props.search}/>
           </Row>
           <XmlToPdf xml={this.props.xml}/>
         </Root>
