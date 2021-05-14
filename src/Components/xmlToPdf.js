@@ -23,7 +23,6 @@ export default class XmlToPdf extends React.Component {
       });
   };
 
-
   render() {
     return (
       <div>

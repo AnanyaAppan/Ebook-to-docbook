@@ -32,7 +32,8 @@ export const addDropdownOption = (
 export const removeDropdownOption = (
   options: DropdownOption[] = [],
   path: number[],
-  indexToRemove: number
+  indexToRemove: number,
+  deleteXml : any
 ): DropdownOption[] => {
   if (path.length === 0) {
     return [
@@ -43,7 +44,7 @@ export const removeDropdownOption = (
 
   const index = path[0];
   const optionToTraverse = options[index];
-
+  if (deleteXml != null) deleteXml(path, indexToRemove);
   return [
     ...options.slice(0, index),
     {
@@ -51,7 +52,8 @@ export const removeDropdownOption = (
       options: removeDropdownOption(
         optionToTraverse.options,
         path.slice(1),
-        indexToRemove
+        indexToRemove,
+        null
       )
     },
     ...options.slice(index + 1)
