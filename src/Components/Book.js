@@ -75,7 +75,7 @@ class Book extends React.Component{
             console.log(this.state.docbkStr)
             var childNode = this.parser.parseFromString(this.state.docbkStr, "text/xml");
             console.log(childNode)
-            this.deleteXML(path,payload,indexToUpdate)
+            this.deleteXML(path,indexToUpdate)
             var nextNode = xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1]
             xml.documentElement.childNodes[path[1] + 1].insertBefore(childNode.documentElement,nextNode);
             // xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1].childNodes[0].nodeValue = payload.value
@@ -89,7 +89,7 @@ class Book extends React.Component{
         var xml = this.state.xml;
         console.log("inside delete xml")
         if (path.length === 1) {
-            var delNode = xml.documentElement.childNodes[indexToRemove + 1].childNodes[0]
+            var delNode = xml.documentElement.childNodes[indexToRemove + 1]
             delNode.parentNode.removeChild(delNode);
         }
         else if (path.length === 2) {
@@ -180,7 +180,7 @@ class Book extends React.Component{
 
         return(
             <div>
-                <App insertXml={this.insertXML} updateXml = {this.updateXML} xml={this.state.xml==null? "":this.serializer.serializeToString(this.state.xml)} options={this.state.options_dict}/>
+                <App insertXml={this.insertXML} updateXml = {this.updateXML} deleteXml={this.deleteXML} xml={this.state.xml==null? "":this.serializer.serializeToString(this.state.xml)} options={this.state.options_dict}/>
             </div>
         )
     }
