@@ -1,18 +1,47 @@
+import { Title } from "@material-ui/icons";
 import React from "react";
 import {withRouter} from 'react-router-dom';
 import App from "./Book/App.tsx";
+import axios from 'axios';
 
 class Book extends React.Component{
 
-    state = {
-        xml : null
+    constructor(props){
+        super(props);
+        this.getDocbookPara = this.getDocbookPara.bind(this);
     }
 
-    insertXML = (path) => {
-        console.log("in insert !")
+    state = {
+        xml : null,
+        options_dict : [],
+        temp_new: {},
+        docbkStr:""
+    }
+
+    serializer = new XMLSerializer();
+    parser = new DOMParser();
+
+    getDocbookPara = (rtfString) => {
+        var data = {
+          rtf:rtfString
+        };
+        axios
+          .post("http://localhost:8080/api/rtf", data,{
+          })
+          .then(response => {
+            this.setState({
+                docbkStr : response.data
+            })
+          })
+          .catch(error => {
+            console.error("There was an error!", error);
+          });
+      };
+
+    insertXML = (path) =>  { 
         var xml = this.state.xml;
         if(path.length === 1){
-            var newChap = xml.createElement("chapter");
+            var newChap = xml.createElement("chapter"); 
             var titleText = xml.createTextNode("");
             var newTitle = xml.createElement("title");
             newTitle.appendChild(titleText);
@@ -34,32 +63,121 @@ class Book extends React.Component{
         },()=>{console.log(this.state.xml)})
     }
 
+    updateXML = (path, payload, indexToUpdate) => {
+        var xml = this.state.xml;
+        if (path.length === 1) {
+            xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0].childNodes[0].nodeValue = payload.value
+        }
+        else if (path.length === 2) {
+            this.getDocbookPara(payload.value);
+            console.log(this.state.docbkStr)
+            var childNode = this.parser.parseFromString(this.state.docbkStr, "text/xml");
+            console.log(childNode)
+            this.deleteXML(path,payload,indexToUpdate)
+            var nextNode = xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1]
+            xml.documentElement.childNodes[path[1] + 1].insertBefore(childNode.documentElement,nextNode);
+            // xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1].childNodes[0].nodeValue = payload.value
+        }
+        this.setState({
+            xml: xml
+        }, () => { console.log(this.state.xml) })
+    }
+
+    deleteXML = (path, payload, indexToUpdate) => {
+        var xml = this.state.xml;
+        if (path.length === 1) {
+            var delNode = xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0]
+            delNode.parentNode.removeChild(delNode);
+        }
+        else if (path.length === 2) {
+            var delNode = xml.documentElement.childNodes[path[1] + 1].childNodes[indexToUpdate + 1]
+            delNode.parentNode.removeChild(delNode);
+        }
+        this.setState({
+            xml: xml
+        }, () => { console.log(this.state.xml) })
+    }
+
+    walk = (node)=> {
+        var child, next;
+        var reBlank = /^\s*$/;
+        switch (node.nodeType) {
+            case 3: // Text node
+                if (reBlank.test(node.nodeValue)) {
+                    node.parentNode.removeChild(node);
+                }
+                break;
+            case 1: // Element node
+            case 9: // Document node
+                child = node.firstChild;
+                while (child) {
+                    next = child.nextSibling;
+                    this.walk(child);
+                    child = next;
+                }
+                break;
+        }
+    }
+
+
     componentDidMount(){
+        console.log('Hehehehehehehe');
         this.setState({
             xml : this.props.location.state.xml
         },()=>{
-            // console.log(this.state.xml.getElementsByTagName("title")[0].childNodes[0].nodeValue)
+            this.walk(this.state.xml);
+            var titleText = this.state.xml.getElementsByTagName("title")[0].childNodes[0].nodeValue
             console.log(this.state.xml)
+            var temp_new = this.state.temp_new;
+            // var options_dict = this.state.options_dict;
             var chapters =  this.state.xml.documentElement.childNodes;
+            console.log(chapters)
+            temp_new['label'] = titleText;
+            temp_new['value'] = titleText;
+            temp_new['options'] = [];
+            console.log('temp_new ', temp_new);
             for(var j = 1; j < chapters.length; j++){
+                var temp_new1 = {};
+                // var temp = [];
                 var node, chapterContent = chapters[j].childNodes;
-                for(var i = 0; i < chapterContent.length; i++)
+                /* here insert title of chapter chapters[j].childNodes[0].nodeValue as label and value of temp_new1*/
+                temp_new1['value'] = chapters[j].childNodes[0].textContent;
+                temp_new1['label'] = chapters[j].childNodes[0].textContent;
+                temp_new1['options'] = []
+                for(var i = 1; i < chapterContent.length; i++)
                 {
                     node = chapterContent[i];
+                    // temp.push(node);
+                    var temp_new2 = {};
+                    temp_new2['label'] = node.textContent;
+                    temp_new2['value'] = node.textContent;
+                    temp_new2['options'] = [];
+                    temp_new1['options'].push(temp_new2); 
+                    console.log(temp_new)
                     if(node.nodeType !== Node.TEXT_NODE) {
                         console.log(node.textContent);
                     }
                 }
+                temp_new['options'].push(temp_new1);
+                // console.log('hehedict', temp);
             }
+            // options_dict.push(temp);
+            // console.log('optionsdict ', options_dict);
+            console.log('heheooptions', temp_new);
+            this.setState({
+                options_dict: [temp_new]
+            })
+            // console.log("dict", options_dict);
             // var node, childNodes = this.state.xml.getElementsByTagName("chapter")[0].childNodes;
         });
     }
 
 
     render(){
+
         return(
             <div>
-                <App insertXml={this.insertXML}/>
+                <App insertXml={this.insertXML} updateXml = {this.updateXML} xml={this.state.xml==null? "":this.serializer.serializeToString(this.state.xml)} options={this.state.options_dict}/>
             </div>
         )
     }

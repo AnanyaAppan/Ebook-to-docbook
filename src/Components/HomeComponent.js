@@ -25,7 +25,7 @@ export default class HomeComponent extends React.Component {
         return (
             <div>
                 <div style={header}>
-                    <h1 style={headerText} > HOLAA </h1>
+                    <h1 style={headerText} > EBook to DocBook </h1>
                 </div>
                 <BodyComponent />
             </div>

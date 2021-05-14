@@ -1,39 +1,34 @@
 import React from "react";
-import exec from "child_process";
+import axios from 'axios';
+import download from 'downloadjs'
 
 export default class XmlToPdf extends React.Component {
 
-    exportAsPdf = () => {
-        console.log("exporting as pdf!")
-        // var exec = require("child_process").exec, child;
-        // child = exec('ls',
-        // function (error, stdout, stderr) {
-        //     console.log('stdout: ' + stdout);
-        //     console.log('stderr: ' + stderr);
-        //     if (error !== null) {
-        //          console.log('exec error: ' + error);
-        //     }
-        // });
-        // child();
+  exportAsPdf = (xmlString) => {
+    var data = {
+      xml:xmlString.replace(/xmlns=""/g,"")
+    };
+    axios
+      .post("http://localhost:8080/api/pdf", data,{
+        responseType: 'blob'
+      })
+      .then(response => {
+        download(response.data, "myBook.pdf", 'application/pdf')
+        console.log(response)
+        this.setState({ dataId: response.data.id })
+      })
+      .catch(error => {
+        this.setState({ errorMessage: error.message });
+        console.error("There was an error!", error);
+      });
+  };
 
-        exec("ls -la", (error, stdout, stderr) => {
-            if (error) {
-                console.log(`error: ${error.message}`)
-            }
-            if (stderr) {
-                console.log(`stderr: ${stderr}`)
-            }
-            console.log(`stdout: ${stdout}`)
-        });  
-    }
-
-    
-    render() {
-        return (
-            <div>
-                <h1> Hi </h1>
-                <button onClick={this.exportAsPdf}>To PDF</button>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <h3> Convert to pdf</h3>
+        <button onClick={this.exportAsPdf.bind(this,this.props.xml)}>To PDF</button>
+      </div>
+    );
+  }
 }

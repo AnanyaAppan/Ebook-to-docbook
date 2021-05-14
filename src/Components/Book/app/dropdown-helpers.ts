@@ -1,14 +1,14 @@
-import { DropdownOption } from './types';
+import { DropdownOption } from "./types";
 
 export const addDropdownOption = (
   options: DropdownOption[] = [],
   path: number[],
-  insertXml : any
+  insertXml: any
 ): DropdownOption[] => {
   if (path.length === 0) {
     const emptyOption = {
-      label: '',
-      value: '',
+      label: "",
+      value: "",
       options: []
     };
 
@@ -17,13 +17,13 @@ export const addDropdownOption = (
 
   const index = path[0];
   const optionToTraverse = options[index];
-  if(insertXml != null) insertXml(path);
+  if (insertXml != null) insertXml(path);
 
   return [
     ...options.slice(0, index),
     {
       ...optionToTraverse,
-      options: addDropdownOption(optionToTraverse.options, path.slice(1),null)
+      options: addDropdownOption(optionToTraverse.options, path.slice(1), null)
     },
     ...options.slice(index + 1)
   ];
@@ -62,7 +62,8 @@ export const updateDropdownOption = (
   options: DropdownOption[] = [],
   path: number[],
   indexToUpdate: number,
-  payload: DropdownOption
+  payload: DropdownOption,
+  updateXml: any
 ): DropdownOption[] => {
   if (path.length === 0) {
     return [
@@ -71,9 +72,10 @@ export const updateDropdownOption = (
       ...options.slice(indexToUpdate + 1)
     ];
   }
-
+  /* updateXml to be called somewhere here! */
   const index = path[0];
-  const optionToUpdate = options[index];
+    const optionToUpdate = options[index];
+    if (updateXml != null) updateXml(path, payload, indexToUpdate);
   return [
     ...options.slice(0, index),
     {
@@ -82,7 +84,8 @@ export const updateDropdownOption = (
         optionToUpdate.options,
         path.slice(1),
         indexToUpdate,
-        payload
+        payload,
+        null
       )
     },
     ...options.slice(index + 1)

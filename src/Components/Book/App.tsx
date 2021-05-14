@@ -1,37 +1,51 @@
-import React, { Component } from 'react';
-import { Classification as ClassificationType } from './app/types';
-import { Dropdown } from './app/dropdown';
-import './index.css';
-import { ThemeProvider } from './theme';
-import { Root } from './app/styled-components';
-import { Classification } from './image-segmentation/classification';
-import { defaultState } from './default-state';
-import { Row } from './ui';
+import React, { Component } from "react";
+import { Classification as ClassificationType, DropdownOption } from "./app/types";
+import { Dropdown } from "./app/dropdown";
+import "./index.css";
+import { ThemeProvider } from "./theme";
+import { Root } from "./app/styled-components";
+import { Classification } from "./image-segmentation/classification";
+import { defaultState } from "./default-state";
+import { Row } from "./ui";
+import XmlToPdf from "../xmlToPdf";
 
-class App extends Component <{insertXml : any},{}>{
+class App extends Component<{ insertXml: any; updateXml: any ; xml : any; options : DropdownOption[]}, {}> {
   state = defaultState;
+  // componentDidUpdate(){
+  //   if(this.props.options !== this.state.classification.options){
+  //     var new_state = this.state;
+  //     new_state.classification.options = this.props.options;
+  //     this.setState({
+  //       state : new_state
+  //     },()=>{
+  //       console.log("yoyo")
+  //       console.log(this.state)
+  //     })
+  //   }
+  // }
   onChange = (classification: ClassificationType) =>
     this.setState({ ...this.state, classification });
   dropdownClicked = (index: number) =>
-    this.setState((state) => ({
+    this.setState(state => ({
       ...state,
       dropdownPath: [...this.state.dropdownPath, index]
     }));
   dropdownClosed = () =>
     this.state.dropdownPath.length > 1
-      ? this.setState((state) => ({
+      ? this.setState(state => ({
           ...state,
           dropdownPath: this.state.dropdownPath.slice(0, -1)
         }))
       : null;
   onAnswer = (answer: string[]) =>
-    this.setState((state) => ({
+    this.setState(state => ({
       ...state,
       answer: answer
     }));
 
   render() {
     return (
+      this.state.classification.options.length?
       <ThemeProvider>
         <Root>
           <Row>
@@ -41,6 +55,7 @@ class App extends Component <{insertXml : any},{}>{
               onDropdownClick={this.dropdownClicked}
               onClose={this.dropdownClosed}
               insertXml={this.props.insertXml}
+              updateXml={this.props.updateXml}
             />
             <Classification
               highlighted={false}
@@ -49,8 +64,12 @@ class App extends Component <{insertXml : any},{}>{
               field={this.state.classification}
             />
           </Row>
+          <XmlToPdf xml={this.props.xml}/>
         </Root>
-      </ThemeProvider>
+      </ThemeProvider> :
+      <div>
+        <h1>Loading...</h1>
+      </div>
     );
   }
 }

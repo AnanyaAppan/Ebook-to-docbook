@@ -3,7 +3,6 @@
 <article>
 	<title>My first DocBook document</title>
 	<sect1>
-		<title>The greeting</title>
 		<para>
 			Hello world
 		</para>

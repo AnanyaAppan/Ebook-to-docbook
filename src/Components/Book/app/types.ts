@@ -4,7 +4,8 @@ export type DropdownProps = {
   classification: Classification;
   onDropdownClick: (index: number) => void;
   onChange: (c: Classification) => void;
-  insertXml: any
+  insertXml: any;
+  updateXml: any;
 };
 
 export interface OptionFieldProps {
@@ -15,14 +16,15 @@ export interface OptionFieldProps {
   isDropdown: boolean;
   onDropdownClick: () => void;
   options?: DropdownOption[];
+  dropdownPath: any
 }
 
 export enum ToolFieldType {
-  line = 'line',
-  polygon = 'polygon',
-  rectangle = 'rectangle',
-  point = 'point',
-  superpixel = 'superpixel'
+  line = "line",
+  polygon = "polygon",
+  rectangle = "rectangle",
+  point = "point",
+  superpixel = "superpixel"
 }
 
 export type OptionProps = {
@@ -31,10 +33,10 @@ export type OptionProps = {
 };
 
 export enum ClassificationFieldType {
-  checklist = 'checklist',
-  radio = 'radio',
-  text = 'text',
-  dropdown = 'dropdown'
+  checklist = "checklist",
+  radio = "radio",
+  text = "text",
+  dropdown = "dropdown"
 }
 
 export interface Classification {
@@ -54,8 +56,8 @@ export interface Tool {
 }
 
 export enum TemplateModes {
-  segmentation = 'segmentation',
-  pixelwise = 'pixelwise'
+  segmentation = "segmentation",
+  pixelwise = "pixelwise"
 }
 
 export type ImageLabelingFormConfiguration = {
