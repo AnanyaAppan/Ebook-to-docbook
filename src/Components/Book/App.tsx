@@ -12,18 +12,18 @@ import Search from "../search";
 
 class App extends Component<{ search: any; insertXml: any; updateXml: any ; deleteXml : any; xml : any; options : DropdownOption[]}, {}> {
   state = defaultState;
-  // componentDidUpdate(){
-  //   if(this.props.options !== this.state.classification.options){
-  //     var new_state = this.state;
-  //     new_state.classification.options = this.props.options;
-  //     this.setState({
-  //       state : new_state
-  //     },()=>{
-  //       console.log("yoyo")
-  //       console.log(this.state)
-  //     })
-  //   }
-  // }
+  set = false
+  componentDidUpdate(){
+    console.log(this.props.options)
+    if(this.set == false && this.props.options.length){
+      var new_state = this.state;
+      new_state.classification.options = this.props.options;
+      this.setState({
+        classification : new_state.classification
+      })
+      this.set = true
+    }
+  }
   onChange = (classification: ClassificationType) =>
     this.setState({ ...this.state, classification });
   dropdownClicked = (index: number) =>

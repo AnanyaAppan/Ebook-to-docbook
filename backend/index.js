@@ -12,7 +12,7 @@ app.post('/api/pdf', (req, res)=> {
     var writeStream = fs.createWriteStream("MyXML.xml");
     writeStream.write(xml);
     writeStream.end();
-    const { exec } = require("child_process");
+    const { exec} = require("child_process");
     exec("xsltproc -xinclude -o mybook.fo /usr/share/xml/docbook/stylesheet/docbook-xsl-ns/fo/docbook.xsl MyXML.xml", (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
@@ -56,6 +56,7 @@ app.post('/api/html', (req, res)=> {
             return;
         }
         console.log(`stdout: ${stdout}`);
+        res.download('MyBook.html');
     });
       
     // var file = fs.createReadStream('MyBook.html');
@@ -63,7 +64,6 @@ app.post('/api/html', (req, res)=> {
     // res.setHeader('Content-Length', stat.size);
     // res.setHeader('Content-Type', 'text');
     // file.pipe(res);
-    res.download('MyBook.html');
 });
 
 app.post('/api/rtf', (req, res)=> {
@@ -95,8 +95,10 @@ app.post('/api/xml', (req, res)=> {
     var writeStream = fs.createWriteStream("MyXML.xml");
     writeStream.write(xml);
     writeStream.end();
-    
-    res.download('MyXML.xml');
+    const { exec} = require("child_process");
+    exec("cat MyXML.xml", (error, stdout, stderr) =>{
+        res.download('MyXML.xml');
+    })
 });
 
 

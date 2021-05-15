@@ -19,7 +19,8 @@ export default class HomeComponent extends React.Component {
         }
         const funStyle = {
             display: 'flex',
-            justifyContent: 'space-around'
+            justifyContent: 'space-around',
+            alignItems: "center"
         };
         return (
             <div>
