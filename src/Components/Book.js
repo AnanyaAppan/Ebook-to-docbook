@@ -129,12 +129,18 @@ class Book extends React.Component{
         var chapters =  this.state.xml.documentElement.childNodes;
         var length = chapters.length;
         console.log("inside search")
-        var ans = []
+        var ans = ""
         for (var i = 1; i < length; i ++){
             var para_length = chapters[i].childNodes.length
             for (var j = 1; j < para_length; j ++){
-                console.log(chapters[i].childNodes[j].childNodes[0].nodeValue)
-                ans.push(chapters[i].childNodes[j].childNodes[0].nodeValue)
+                var temp_text = chapters[i].childNodes[j].childNodes[0].nodeValue
+                var list = temp_text.split(" ")
+                for (var k = 0; k < list.length; k ++){
+                    if (list[k] == text){
+                        ans = (chapters[i].childNodes[j].childNodes[0].nodeValue)
+                        break
+                    }
+                }
             }
         }
         return ans
