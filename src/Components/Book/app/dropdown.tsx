@@ -94,7 +94,8 @@ export function Dropdown({
   };
 
   const onRemoveDropdown = (index: number) => () => {
-    updateDropdown(removeDropdownOption(topLevelOptions, dropdownPath, index, deleteXml));
+    var new_options = removeDropdownOption(topLevelOptions, dropdownPath, index, deleteXml);
+    updateDropdown(new_options);
   };
 
   const optionFields = (displayOptions || []).map((option: any, i: number) => {
@@ -108,6 +109,7 @@ export function Dropdown({
           isDropdown={true}
           onDropdownClick={() => onDropdownClick(i)}
           dropdownPath={dropdownPath}
+          index={i}
         />
       </OptionRow>
     );

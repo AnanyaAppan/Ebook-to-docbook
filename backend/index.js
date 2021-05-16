@@ -68,6 +68,7 @@ app.post('/api/html', (req, res)=> {
 
 app.post('/api/rtf', (req, res)=> {
     const rtf = req.body.rtf;
+    console.log(rtf)
     var fs = require('fs');
     var writeStream = fs.createWriteStream("MyHTML.html");
     writeStream.write(rtf);

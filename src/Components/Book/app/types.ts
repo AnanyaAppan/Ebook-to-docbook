@@ -17,7 +17,7 @@ export interface OptionFieldProps {
   isDropdown: boolean;
   onDropdownClick: () => void;
   options?: DropdownOption[];
-  dropdownPath: any
+  dropdownPath: any;
 }
 
 export enum ToolFieldType {

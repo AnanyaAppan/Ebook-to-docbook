@@ -23,6 +23,7 @@ class Book extends React.Component{
     parser = new DOMParser();
 
     getDocbookPara = (rtfString) => {
+        console.log(rtfString)
         var data = {
           rtf:rtfString
         };
@@ -68,6 +69,7 @@ class Book extends React.Component{
         var xml = this.state.xml;
         console.log(path)
         console.log(indexToUpdate)
+        payload.value = payload.value.replace(/_/g," ");
         if (path.length === 1) {
             xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0].childNodes[0].nodeValue = payload.value
         }

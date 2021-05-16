@@ -16,15 +16,27 @@ class RTFInput extends Component {
         value: RichTextEditor.createValueFromString(this.props.value, 'html')
       }
     }
+
+    componentWillReceiveProps(nextProps) {
+      console.log("new props!")
+      console.log(nextProps.value)
+      console.log(this.state.value.toString('html'))
+      if(nextProps.value !== this.state.value.toString('html')) {
+        console.log("changed!")
+        this.setState({value: RichTextEditor.createValueFromString(nextProps.value, 'html')})
+      }
+    }
    
     onChange = (value) => {
-      this.setState({value});
-      // this.props.onChange(this.state.value.toString('html'))
-      this.props.onChange({
-        value: convertLabelToValue(this.state.value.toString('html')),
-        label: this.state.value.toString('html'),
-        options: this.props.options
-      })
+      this.setState({value},()=>{
+        console.log("in on change")
+        // this.props.onChange(this.state.value.toString('html'))
+        this.props.onChange({
+          value: this.state.value.toString('html'),
+          label: this.state.value.toString('html'),
+          options: this.props.options
+        })
+      });
     }
    
     render () {
@@ -32,6 +44,7 @@ class RTFInput extends Component {
         <RichTextEditor
           value={this.state.value}
           onChange={this.onChange}
+          onKeyUp={this.props.onKeyUp}
         />
       );
     }
