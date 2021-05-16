@@ -27,7 +27,7 @@ class Book extends React.Component{
           rtf:rtfString
         };
         axios
-          .post("http://localhost:8080/api/rtf", data,{
+          .post("http://localhost:5000/api/rtf", data,{
           })
           .then(response => {
             this.setState({
@@ -124,8 +124,18 @@ class Book extends React.Component{
     }
 
     search = (text) => {
-        console.log(text)
-        return "lol"
+        var chapters =  this.state.xml.documentElement.childNodes;
+        var length = chapters.length;
+        console.log("inside search")
+        var ans = []
+        for (var i = 1; i < length; i ++){
+            var para_length = chapters[i].childNodes.length
+            for (var j = 1; j < para_length; j ++){
+                console.log(chapters[i].childNodes[j].childNodes[0].nodeValue)
+                ans.push(chapters[i].childNodes[j].childNodes[0].nodeValue)
+            }
+        }
+        return ans
     }
 
 

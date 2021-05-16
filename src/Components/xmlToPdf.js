@@ -9,7 +9,7 @@ export default class XmlToPdf extends React.Component {
       xml:xmlString.replace(/xmlns=""/g,"")
     };
     axios
-      .post("http://localhost:8080/api/pdf", data,{
+      .post("http://localhost:5000/api/pdf", data,{
         responseType: 'blob'
       })
       .then(response => {
@@ -28,7 +28,7 @@ export default class XmlToPdf extends React.Component {
       xml:xmlString.replace(/xmlns=""/g,"")
     };
     axios
-      .post("http://localhost:8080/api/html", data,{
+      .post("http://localhost:5000/api/html", data,{
         responseType: 'blob'
       })
       .then(response => {
@@ -47,7 +47,7 @@ export default class XmlToPdf extends React.Component {
       xml:xmlString.replace(/xmlns=""/g,"")
     };
     axios
-      .post("http://localhost:8080/api/xml", data,{
+      .post("http://localhost:5000/api/xml", data,{
         responseType: 'blob'
       })
       .then(response => {

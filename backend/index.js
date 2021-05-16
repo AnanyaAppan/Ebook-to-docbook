@@ -103,7 +103,7 @@ app.post('/api/xml', (req, res)=> {
 
 
 //PORT ENVIRONMENT VARIABLE
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}..`));
 
 // const xml = '<book xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0"><title>lol</title></book>';
