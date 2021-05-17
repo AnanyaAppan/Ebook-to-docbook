@@ -23,6 +23,7 @@ class Book extends React.Component{
     parser = new DOMParser();
 
     getDocbookPara = (rtfString) => {
+        console.log(rtfString)
         var data = {
           rtf:rtfString
         };
@@ -68,6 +69,7 @@ class Book extends React.Component{
         var xml = this.state.xml;
         console.log(path)
         console.log(indexToUpdate)
+        payload.value = payload.value.replace(/_/g," ");
         if (path.length === 1) {
             xml.documentElement.childNodes[indexToUpdate + 1].childNodes[0].childNodes[0].nodeValue = payload.value
         }
@@ -126,7 +128,6 @@ class Book extends React.Component{
     search = (text) => {
         var chapters =  this.state.xml.documentElement.childNodes;
         var length = chapters.length;
-        console.log("inside search")
         var ans = ""
         var flag = 0
         for (var i = 1; i < length; i ++){
@@ -136,7 +137,7 @@ class Book extends React.Component{
                 var list = temp_text.split(" ")
                 for (var k = 0; k < list.length; k ++){
                     console.log(list[k])
-                    if (list[k] == text){
+                    if (list[k].includes(text) ){
                         ans = (chapters[i].childNodes[j].childNodes[0].nodeValue)
                         flag= 1
                         break
@@ -150,6 +151,8 @@ class Book extends React.Component{
                 break
             }
         }
+        console.log("ans")
+        console.log(ans)
         return ans
     }
 

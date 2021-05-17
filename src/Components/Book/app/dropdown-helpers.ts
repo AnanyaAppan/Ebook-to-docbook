@@ -35,6 +35,7 @@ export const removeDropdownOption = (
   indexToRemove: number,
   deleteXml : any
 ): DropdownOption[] => {
+
   if (path.length === 0) {
     return [
       ...options.slice(0, indexToRemove),

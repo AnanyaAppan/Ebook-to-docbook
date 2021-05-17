@@ -17,18 +17,22 @@ export function OptionField({
   isDropdown,
   onDropdownClick,
   options,
-  dropdownPath
+  dropdownPath,
 }: OptionFieldProps) {
+  console.log(label)
+  console.log(dropdownPath)
   return (
     <StyledOptionField>
       {dropdownPath.length==2?
       <RTFInput
+        placeholder="New para"
         onChange={onChange}
         options={options}
         value={label}
+        onKeyUp={(e:any) => e.key === 'Enter' && onEnter()}
       />:
       <Input
-        placeholder="New option"
+        placeholder="New chapter"
         style={{ fontSize: '14px', display: 'block' }}
         onChange={(e) =>
           onChange({
