@@ -24,7 +24,7 @@ export default class HomeComponent extends React.Component {
         };
         return (
             <div>
-                <h1 style={descText}> Description of what the application does maybe? </h1>
+                <h1 style={descText}> A web app to create and edit docbooks online </h1>
                 <div style={funStyle}>
                     <div>
                         <h1 style={descText}>CRUD operations on an existing book/xml file </h1>
